@@ -8,6 +8,15 @@ function App() {
   const [isPlay,setIsPlay] = useState(false)
   const [songs, setSongs] = useState(songss)
   const [currentsong,setCurrentsong] = useState(songs[0])
+  const [totalT, setTotalT] = useState("")
+  const [ prog ,setProg ] = useState("")
+
+  useEffect(()=>{
+    let totaltime = audioElem.current.duration
+    let currentTime = audioElem.current.currentTime 
+    setTotalT(totaltime)
+    setProg(currentTime)
+  },[])
 
   const audioElem = useRef()
 
@@ -22,7 +31,7 @@ function App() {
 
   // lenght of song
   function len(e){
-    let width = e.target.clientWidth  
+    let width = e.currentTarget.clientWidth  
     let offSet = e.nativeEvent.offsetX
     let divProg = offSet/width * 100
     audioElem.current.currentTime = divProg / 100 * currentsong.duration
@@ -30,8 +39,11 @@ function App() {
 
   // playing width
   function playing(e){
-    let totaltime = audioElem.current.duration
-    let currentTime = audioElem.current.currentTime 
+    let totaltime = e.target.duration
+    let currentTime = e.target.currentTime 
+
+    setTotalT(totaltime)
+    setProg(currentTime / totaltime * 100)
 
     setCurrentsong({...currentsong,progress:currentTime/totaltime * 100,duration: totaltime})
     if(currentTime === totaltime){
@@ -68,7 +80,7 @@ function App() {
         <div className="imgdiv"></div>
         <div className='time'></div>
         <div className="lenght" onClick={len}>
-          <div className="ll" style={{width: `${currentsong.progress}%`}}></div>
+          <div className="ll" style={{width: `${prog}%`}}></div>
         </div>
         <div className="controls">
           <button onClick={back}><i className="bi bi-skip-backward-circle"></i>previous</button>
