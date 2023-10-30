@@ -6,18 +6,15 @@ const songss = [
     {
         id:1,
         title: "Get Down With The Victom",
-        url: get,
-        progress: 0
+        url: get
     },{
         id:2,
         title: "HESSON",
-        url: hes,
-        progress: 0
+        url: hes
     },{
         id:3,
         title: "Unbroken",
-        url: unbroken,
-        progress: 0
+        url: unbroken
     }
 ]
 

@@ -9,16 +9,18 @@ function App() {
   const [songs, setSongs] = useState(songss)
   const [currentsong,setCurrentsong] = useState(songs[0])
   const [totalT, setTotalT] = useState("")
-  const [ prog ,setProg ] = useState("")
+  const [ prog ,setProg ] = useState(0)
+  const audioElem = useRef()
 
   useEffect(()=>{
+    console.log(audioElem.current.duration)
     let totaltime = audioElem.current.duration
     let currentTime = audioElem.current.currentTime 
+    console.log(`total: ${totaltime}, current: ${currentTime}`)
     setTotalT(totaltime)
-    setProg(currentTime)
+    setProg(currentTime / totaltime * 100)
   },[])
 
-  const audioElem = useRef()
 
   //UseEffect play and pause
   useEffect(()=>{
@@ -77,7 +79,9 @@ function App() {
       <audio preload='auto' src={currentsong.url} ref={audioElem} onTimeUpdate={playing}></audio>
       <div className="container">
         <h3 className='title'>{currentsong.title}</h3>
-        <div className="imgdiv"></div>
+        <div className="imgdiv">
+          <img src="assets/mp3B.jpeg" alt="" />
+        </div>
         <div className='time'></div>
         <div className="lenght" onClick={len}>
           <div className="ll" style={{width: `${prog}%`}}></div>
